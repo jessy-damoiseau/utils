@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm ~/.vimrc
-cp vimrc ~ && mv ~/vimrc ~/.vimrc
+rm -rf ~/.vimrc
+cp srcs/.vimrc ~
