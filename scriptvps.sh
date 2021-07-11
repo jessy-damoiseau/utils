@@ -8,8 +8,6 @@ echo "set tabstop=4" >> .vimrc
 echo "set shiftwidth=4" >> .vimrc
 sudo apt install zsh
 sudo apt update
-sudo apt install default-jre
-sudo apt install default-jdk
 sudo apt install screen
 sudo apt install git
 git config --global user.name "jessy-damoiseau"
