@@ -11,5 +11,7 @@ sudo apt update
 sudo apt install default-jre
 sudo apt install default-jdk
 sudo apt install git
+git config --global user.name "jessy-damoiseau"
+git config --global user.email "jessydamoiseau@gmail.com"
 ssh-keygen
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
