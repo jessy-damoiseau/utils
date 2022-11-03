@@ -1,0 +1,67 @@
+#_______________________________Filename output________________________________#
+
+NAME			= 
+
+#______________________________Commands and arguments__________________________#
+
+CXX				= @ clang++
+CXXFLAGS		= -Wall -Wextra -Werror -std=c++98 -MMD
+RM				= @ rm -rf
+
+#_________________________Sources and objects directories______________________#
+
+SRCS_DIR		= 
+OBJS&DEPS	= ./objs\&deps/
+INCLUDES_DIR	= 
+SUFIX = *.cpp
+
+FILES			= $(shell cd $(SRCS_DIR) && ls $(SUFIX) && cd ..)
+OBJECTS			= $(addprefix $(OBJS&DEPS),$(FILES:.cpp=.o))
+DEPENDS			= $(OBJECTS:.o=.d)
+
+
+#________________________________Building rules________________________________#
+
+all:			init $(NAME)
+
+init:
+
+		@ if test -f $(NAME);\
+		then echo "$(_CYAN)[program already created]$(_NC)";\
+		else echo "$(_YELLOW)[Initialize program]$(_NC)";\
+		fi
+		$(shell mkdir -p $(OBJS&DEPS))
+
+$(OBJS&DEPS)%.o:$(SRCS_DIR)%.cpp
+				@ echo "\t$(_YELLOW) compiling... $*.cpp$(_NC)"
+				$(CXX) $(CXXFLAGS) -I $(INCLUDES_DIR) -c $< -o $@
+
+${NAME}:		$(OBJECTS)
+				@ echo "\t$(_YELLOW)[Creating program]$(_NC)"
+				$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(NAME)
+				@ echo "$(_GREEN)[program created & ready]$(_NC)"
+
+#________________________________Cleaning rules________________________________#
+
+clean:
+				@ echo "$(_RED)[cleaning up objects & dependancies files]$(_NC)"
+				$(RM) $(OBJECTS) $(DEPENDS) $(OBJS&DEPS)
+
+fclean:			clean
+				@ echo "$(_RED)[cleaning up binary files]$(_NC)"
+				$(RM) $(NAME) 
+
+re:				fclean all
+
+#_____________________________________Misc.____________________________________#
+
+-include $(DEPENDS)
+
+_RED		=	\033[31m
+_GREEN		=	\033[32m
+_YELLOW		=	\033[33m
+_CYAN		=	\033[96m
+_NC			=	\033[0m
+
+.PHONY:			all clean fclean re
+.SILENT:		all
